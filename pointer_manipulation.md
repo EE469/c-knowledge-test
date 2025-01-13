@@ -269,3 +269,197 @@ int main() {
 ```
 
 What should be the type of operation variable?
+
+
+## Uninitialized variables
+
+### 5.1
+
+What would be the output of the following code?
+```c
+int main() {
+    int a;
+    printf("%d\n", a);
+}
+```
+
+---
+
+### 5.2
+
+Find the bug in the following code?
+
+```c
+int get_status(int condition) {
+    int status;
+    
+    switch(condition) {
+        case 1:
+            status = 100;
+            break;
+        case 2:
+            status = 200;
+            break;
+        case 3:
+            break;
+    }
+    
+    return status;
+}
+```
+
+### 5.3
+
+Find for what values of <X> following code would give an incorrect result.
+
+```c
+int process_value(int flag) {
+    int result;
+    
+    if(flag > 0) {
+        result = 42;
+    }
+    
+    return result;
+}
+
+int main() {
+    printf("%d\n", process_value(<X>));
+}
+```
+
+---
+
+### 5.4
+
+What would happen here? 
+
+```c
+struct Person {
+    char* name;
+    int age;
+    float height;
+};
+
+void print_person() {
+    struct Person person;
+    person.age = 25;
+    
+    printf("Name: %s\n", person.name);
+    printf("Age: %d\n", person.age);
+    printf("Height: %.2f\n", person.height);
+}
+```
+
+
+## Arrays
+
+For the following code snippets try to find 
+what's wrong with the code. Consider memory layouts, loop conditions when you try to figure out the issues.
+
+### 6.1
+
+```c
+void process_data(char* buffer) {
+    // Buffer is 4096 bytes
+    for(int i = 0; i <= 4096; i++) {
+        buffer[i] = 'A';
+    }
+}
+```
+
+---
+
+### 6.2
+
+```c
+void process_string(char* str) {
+    char result[10];
+    int i = 0;
+    while(str[i] != '\0') {
+        result[i] = str[i];
+        i++;
+    }
+    result[i] = '\0';
+    printf("%s\n", result);
+}
+
+int main() {
+    process_string("Hello World!");
+    return 0;
+}
+```
+
+---
+
+### 6.3
+
+```c
+int process_data(int data[][4], int rows) {
+    int sum = 0;
+    for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < 5; j++) {
+            sum += data[i][j];
+        }
+    }
+    return sum;
+}
+
+int main() {
+    int matrix[3][4] = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}};
+    printf("%d\n", process_data(matrix, 3));
+}
+```
+
+## Linked Lists
+
+### 7.1
+
+Consider the following operation for a singly linked list with follwing node structure.
+
+```c
+struct Node {
+    int data;
+    struct Node* next;
+};
+```
+
+Find the bug in the following code? 
+```c
+void delete(struct Node* head) {
+    struct Node* current = head;
+    while(current != NULL) {
+        free(current);
+        current = current->next;
+    }
+}
+```
+<details>
+<summary> <b>HINT</b> </summary>
+Look at the sequence of operations in the loop.
+</details>
+
+
+---
+
+### 7.2
+
+Find the bug in the following code? 
+
+```c
+int count_nodes(struct Node* head) {
+    int count = 0;
+    struct Node* current = head;
+    
+    while(current->next != NULL) {
+        count++;
+        current = current->next;
+    }
+    
+    return count;
+}
+```
+<details>
+<summary> <b>HINT</b> </summary>
+Try to manually write down how the loop would execute for smaller linked list.
+</details>

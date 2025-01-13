@@ -101,3 +101,25 @@ int main() {
 }
 ```
 If a user inputs "12345678", what might happen to `important_value`?
+
+
+### 1.7 
+
+Find all the problems with the following code.
+
+```c
+void copy_name(char* dest) {
+    char name[] = "Alice";
+    int i;
+    
+    for(i = 0; name[i]; i++) {
+        dest[i] = name[i];
+    }
+}
+
+int main() {
+    char short_buffer[4];
+    copy_name(short_buffer);
+    printf("%s\n", short_buffer);
+}
+```
